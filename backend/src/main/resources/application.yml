@@ -1,0 +1,17 @@
+#spring.application.name=Backend
+
+spring:
+  sql:
+    init:
+      platform: h2
+      mode: always
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: backend
+    password: backend
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create
