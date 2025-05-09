@@ -1,7 +1,6 @@
 package com.ua.web.backend.repository;
 
-
-import com.ua.web.backend.entity.User;
+import com.ua.web.backend.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

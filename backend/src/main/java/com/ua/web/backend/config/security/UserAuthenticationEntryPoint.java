@@ -1,7 +1,7 @@
-package com.ua.web.backend.config;
+package com.ua.web.backend.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ua.web.backend.dto.ErrorDto;
+import com.ua.web.backend.model.dto.ErrorDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

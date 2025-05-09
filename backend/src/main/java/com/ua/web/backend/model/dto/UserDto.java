@@ -1,4 +1,4 @@
-package com.ua.web.backend.dto;
+package com.ua.web.backend.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class SignUpDto {
+public class UserDto {
 
+    private String id;
     private String firstName;
     private String lastName;
     private String login;
-    private char[] password;
+    private String token;
+    private String role;
 }

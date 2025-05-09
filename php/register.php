@@ -6,6 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lastName = $_POST['lastName'] ?? '';
     $login = $_POST['login'] ?? '';
     $password = $_POST['password'] ?? '';
+    $role = $_POST['role'] ?? ''; // Get the selected role
 
     $backend_url = 'http://localhost:8080/register';
 
@@ -13,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'firstName' => $firstName,
         'lastName' => $lastName,
         'login' => $login,
-        'password' => $password
+        'password' => $password,
+        'role' => $role // Include the role in the data sent to the backend
     ]);
 
     $ch = curl_init($backend_url);

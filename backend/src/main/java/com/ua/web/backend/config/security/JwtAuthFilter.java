@@ -1,4 +1,4 @@
-package com.ua.web.backend.config;
+package com.ua.web.backend.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -8,9 +8,8 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true ||
     exit;
 }
 
-$backend_url = 'http://localhost:8080/messages';
+$backend_url = 'http://localhost:8080/v1/dashboard';
 $auth_token = $_SESSION['auth_token'];
-
 $ch = curl_init($backend_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -23,13 +22,14 @@ $curl_error = curl_error($ch);
 
 curl_close($ch);
 
-$page_title = 'Messages';
+$page_title = 'Dashboard';
 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-     <style>
+    <title><?php echo $page_title; ?></title>
+    <style>
         body {
             font-family: sans-serif;
             display: flex;
@@ -49,11 +49,11 @@ $page_title = 'Messages';
             width: 80%; /* Limit container width */
             max-width: 600px; /* Max width for larger screens */
         }
-         h1 {
+        h1 {
             color: #333;
             margin-bottom: 20px;
         }
-         button {
+        button {
             background-color: #5cb85c; /* Green */
             color: white;
             padding: 10px 15px;
@@ -66,7 +66,7 @@ $page_title = 'Messages';
         button:hover {
             background-color: #4cae4c;
         }
-         a button {
+        a button {
             text-decoration: none;
             display: inline-block; /* Allows padding and margin */
         }
@@ -84,44 +84,44 @@ $page_title = 'Messages';
     </style>
 </head>
 <body>
-     <div class="container">
-        <h1>Messages</h1>
-         <p><a href="index.php"><button style="background-color: #0275d8;">Back to Home</button></a></p>
+<div class="container">
+    <h1>Messages</h1>
+    <p><a href="index.php"><button style="background-color: #0275d8;">Back to Home</button></a></p>
 
-        <?php
-        if ($curl_error) {
-            echo '<p style="color: red;">Error fetching messages: ' . $curl_error . '</p>';
-        } elseif ($http_status === 200) {
-            $messages = json_decode($response, true);
-            if (json_last_error() === JSON_ERROR_NONE && is_array($messages)) {
-                if (count($messages) > 0) {
-                    echo '<ul>';
-                    foreach ($messages as $message) {
-                        // Assuming messages are simple strings or have a 'text' key
-                        // If messages are objects, you might need to access a specific key like $message['text']
-                        echo '<li>' . htmlspecialchars(is_array($message) ? json_encode($message) : $message) . '</li>'; // Handle potential non-string messages
-                    }
-                    echo '</ul>';
-                } else {
-                    echo '<p>No messages found.</p>';
+    <?php
+    if ($curl_error) {
+        echo '<p style="color: red;">Error fetching messages: ' . $curl_error . '</p>';
+    } elseif ($http_status === 200) {
+        $messages = json_decode($response, true);
+        if (json_last_error() === JSON_ERROR_NONE && is_array($messages)) {
+            if (count($messages) > 0) {
+                echo '<ul>';
+                foreach ($messages as $message) {
+                    // Assuming messages are simple strings or have a 'text' key
+                    // If messages are objects, you might need to access a specific key like $message['text']
+                    echo '<li>' . htmlspecialchars(is_array($message) ? json_encode($message) : $message) . '</li>'; // Handle potential non-string messages
                 }
+                echo '</ul>';
             } else {
-                echo '<p style="color: red;">Invalid response from backend.</p>';
-                 // Optionally print the raw response for debugging
-                 // echo '<pre>' . htmlspecialchars($response) . '</pre>';
+                echo '<p>No messages found.</p>';
             }
-        } elseif ($http_status === 401) {
-            // Token might be expired or invalid
-            echo '<p style="color: red;">Unauthorized. Please login again.</p>';
-             // Optionally clear the session or token and prompt re-login
-             // session_unset();
-             // session_destroy();
         } else {
-            echo '<p style="color: red;">Error from backend: HTTP status ' . $http_status . '</p>';
-             // Optionally print the raw response for debugging
-             // echo '<pre>' . htmlspecialchars($response) . '</pre>';
+            echo '<p style="color: red;">Invalid response from backend.</p>';
+            // Optionally print the raw response for debugging
+            // echo '<pre>' . htmlspecialchars($response) . '</pre>';
         }
-        ?>
-    </div>
+    } elseif ($http_status === 401) {
+        // Token might be expired or invalid
+        echo '<p style="color: red;">Unauthorized. Please login again.</p>';
+        // Optionally clear the session or token and prompt re-login
+        // session_unset();
+        // session_destroy();
+    } else {
+        echo '<p style="color: red;">Error from backend: HTTP status ' . $http_status . '</p>';
+        // Optionally print the raw response for debugging
+        // echo '<pre>' . htmlspecialchars($response) . '</pre>';
+    }
+    ?>
+</div>
 </body>
 </html>

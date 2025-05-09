@@ -1,8 +1,10 @@
-package com.ua.web.backend.config;
+package com.ua.web.backend.config.security;
 
+import com.ua.web.backend.model.entity.RoleEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -29,6 +31,7 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/", "/register", "/index", "/login", "/logout").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/v1/**").hasRole(RoleEnum.ADMIN.toString())
                         .anyRequest().authenticated());
         return http.build();
 

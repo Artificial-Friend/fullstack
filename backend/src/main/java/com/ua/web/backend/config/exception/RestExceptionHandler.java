@@ -1,6 +1,6 @@
-package com.ua.web.backend.config;
+package com.ua.web.backend.config.exception;
 
-import com.ua.web.backend.dto.ErrorDto;
+import com.ua.web.backend.model.dto.ErrorDto;
 import com.ua.web.backend.exception.AppException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

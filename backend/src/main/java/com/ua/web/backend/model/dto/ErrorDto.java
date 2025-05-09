@@ -1,4 +1,4 @@
-package com.ua.web.backend.dto;
+package com.ua.web.backend.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
